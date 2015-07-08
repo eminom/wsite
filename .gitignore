@@ -3,5 +3,4 @@ deps/
 .erlang.mk/
 relx
 _rel
-
-
+ebin/

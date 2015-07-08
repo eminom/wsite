@@ -7,9 +7,18 @@
 -export([init/3]).
 -export([handle/2]).
 -export([terminate/3]).
+-vsn(1001).
+
+-include("wsite_include.hrl").
 
 -record(state, {
 }).
+				
+toStr(T={_,_,_})->
+	Str = io_lib:format("<~s:~s:~s>", lists:map(fun integer_to_list/1,
+    tuple_to_list(T))),
+	io_lib:format("~s", [Str]).
+
 
 %init(_, Req, _Opts) ->
 %	{ok, Req, #state{}}.
@@ -18,7 +27,7 @@ init(_, Req, Opts)->
 	Req2 = cowboy_req:reply(
 		200,
 		[{<<"content-type">>, <<"text/plain">>}],
-		<<"Force of Ultra Nuclear Science">>,
+		list_to_binary([?BinaryContent, toStr(time())]),
 		Req
 	),	
 	{ok, Req2, Opts}.

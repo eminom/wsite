@@ -19,15 +19,18 @@ toStr(T={_,_,_})->
     tuple_to_list(T))),
 	io_lib:format("~s", [Str]).
 
-
 %init(_, Req, _Opts) ->
 %	{ok, Req, #state{}}.
 
 init(_, Req, Opts)->
+  %% And it passed.
+	%% {ok, _ } = file:read_file("lib/wsite-0.1.0/src/res/FUNS.png"),
+	%%
+	{ok, CurrentPath} = file:get_cwd(),
 	Req2 = cowboy_req:reply(
 		200,
 		[{<<"content-type">>, <<"text/plain">>}],
-		list_to_binary([?BinaryContent, toStr(time())]),
+		list_to_binary([?BinaryContent, toStr(time()), "\n", CurrentPath]),
 		Req
 	),	
 	{ok, Req2, Opts}.

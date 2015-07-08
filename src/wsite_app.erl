@@ -6,7 +6,14 @@
 
 start(_Type, _Args) ->
 	Dispatcher = cowboy_router:compile(
-		[ {'_', [{"/", wsite_handler,[]}]} ]
+
+		[ %Host starts.
+			{'_', [
+					{"/", wsite_handler,[]},
+					{"/logo", wsite_logo, []}
+				]
+			} 
+		] %Host ends.
 	),
 	{ok, _} = cowboy:start_http(
 		my_http_listener, 

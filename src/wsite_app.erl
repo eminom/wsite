@@ -5,7 +5,7 @@
 -export([stop/1]).
 
 start(_Type, _Args) ->
-	Dispatcher = cowboy_http:compile(
+	Dispatcher = cowboy_router:compile(
 		[ {'_', [{"/", wsite_handler,[]}]} ]
 	),
 	{ok, _} = cowboy:start_http(

@@ -10,7 +10,8 @@ start(_Type, _Args) ->
 		[ %Host starts.
 			{'_', [
 					{"/", wsite_handler,[]},
-					{"/logo", wsite_logo, []}
+					{"/logo", wsite_logo, []},
+					{"/audio", wsite_mp3,[]}
 				]
 			} 
 		] %Host ends.

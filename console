@@ -1,0 +1,6 @@
+#!/usr/bin/perl -w
+use strict;
+
+print "Starting the application in console...\n";
+system "./_rel/wsite_release/bin/wsite_release console";
+die if $?;

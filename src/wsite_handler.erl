@@ -18,7 +18,7 @@ init(_, Req, Opts)->
 	Req2 = cowboy_req:reply(
 		200,
 		[{<<"content-type">>, <<"text/plain">>}],
-		<<"Hello, wsite 8083!">>,
+		<<"Force of Ultra Nuclear Science">>,
 		Req
 	),	
 	{ok, Req2, Opts}.

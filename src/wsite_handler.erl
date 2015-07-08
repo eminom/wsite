@@ -21,7 +21,7 @@ init(_, Req, Opts)->
 		<<"Hello, wsite 8083!">>,
 		Req
 	),	
-	{ok, Req2, Opts).
+	{ok, Req2, Opts}.
 
 handle(Req, State=#state{}) ->
 	{ok, Req2} = cowboy_req:reply(200, Req),

@@ -1,3 +1,4 @@
+priv/
 *.beam
 deps/
 .erlang.mk/

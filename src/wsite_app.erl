@@ -12,7 +12,8 @@ start(_Type, _Args) ->
 					{"/assets/[...]", cowboy_static, {priv_dir, wsite, "static/assets"}},
 					%{"/", wsite_handler,[]},
 					{"/logo", wsite_logo, []},
-					{"/audio", wsite_mp3,[]}
+					{"/audio", wsite_mp3,[]},
+					{"/members", wsite_members, []}
 				]
 			} 
 		] %Host ends.

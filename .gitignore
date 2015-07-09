@@ -1,7 +1,7 @@
-priv/
+/priv
 *.beam
-deps/
-.erlang.mk/
+/deps
+/.erlang.mk
 relx
-_rel/
-ebin/
+/_rel
+/ebin

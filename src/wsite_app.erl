@@ -6,10 +6,11 @@
 
 start(_Type, _Args) ->
 	Dispatcher = cowboy_router:compile(
-
 		[ %Host starts.
 			{'_', [
-					{"/", wsite_handler,[]},
+					{"/", cowboy_static, {priv_file, wsite, "static/index.html"}},
+					{"/assets/[...]", cowboy_static, {priv_dir, wsite, "static/assets"}},
+					%{"/", wsite_handler,[]},
 					{"/logo", wsite_logo, []},
 					{"/audio", wsite_mp3,[]}
 				]

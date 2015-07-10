@@ -13,7 +13,9 @@ start(_Type, _Args) ->
 					%{"/", wsite_handler,[]},
 					{"/logo", wsite_logo, []},
 					{"/audio", wsite_mp3,[]},
-					{"/members", wsite_members, []}
+					{"/members", wsite_members, []},
+					{"/path", wsite_path, []},
+					{"/list", wsite_list, []}
 				]
 			} 
 		] %Host ends.
@@ -23,6 +25,7 @@ start(_Type, _Args) ->
 		100, [{port, 8083}],
 		[{env, [{dispatch, Dispatcher}]}]
 	),
+	{ok, _} = walker:start_link(),
 	wsite_sup:start_link().
 
 stop(_State) ->

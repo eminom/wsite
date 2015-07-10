@@ -15,7 +15,8 @@ start(_Type, _Args) ->
 					{"/audio", wsite_mp3,[]},
 					{"/members", wsite_members, []},
 					{"/path", wsite_path, []},
-					{"/list", wsite_list, []}
+					{"/list", wsite_list, []},
+					{"/image", wsite_image, []}
 				]
 			} 
 		] %Host ends.

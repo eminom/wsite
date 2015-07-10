@@ -9,7 +9,7 @@
 -author({eminom}).
 
 %% API.
--export([start_link/0, retrieve_page/1]).
+-export([start_link/0, retrieve_page/1, retrieve_page2/1]).
 
 %% gen_server.
 -export([init/1]).
@@ -37,9 +37,14 @@
 start_link() ->
 	gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
-%-spec retrieve_page() -> {ok, <<>>}.
+%-spec retrieve_page() -> {ok, binary()}.
 retrieve_page(Path) ->
 	{ok, BinaryContent} = gen_server:call(?MODULE, {retrieve_page, Path}),
+	BinaryContent.
+
+%-spec retrieve_page2() -> {ok, binary()}.
+retrieve_page2(Path) ->
+	{ok, BinaryContent} = gen_server:call(?MODULE, {retrieve_page2, Path}),
 	BinaryContent.
 
 %% gen_server.
@@ -49,6 +54,10 @@ init([]) ->
 
 handle_call({retrieve_page, Path}, _From, State)->
 	#list_state{binary=Binary} = retrieve(Path),
+	{reply, {ok, Binary}, State};
+
+handle_call({retrieve_page2, Path}, _From, State)->
+	#list_state{binary=Binary} = retrieve2(Path),
 	{reply, {ok, Binary}, State};
 
 handle_call(_Request, _From, State) ->
@@ -96,6 +105,9 @@ if_directory(Full)->
 retrieve(Cd)->
 	list(Cd, fun printer/3, #list_state{prepath=Cd}).
 
+retrieve2(Cd)->
+	list(Cd, fun page_printer/3, #list_state{prepath=Cd}).
+
 list(Cd, Processor, State)->
 	case if_directory(Cd) of
 		true->
@@ -131,13 +143,6 @@ read_type(Full)->
 printer(Cd, [H|T], State=#list_state{prepath=PrePath, binary=Binary})->
 	Full = Cd ++ "/" ++ H,
 	Type = read_type(Full),
-	%Format = case Type of
-	%	"directory"->
-	%		"<~p>~n";
-	%	_ ->
-	%		"~p~n"
-	%	end,
-	%io:format("~p ~p ~p~n", [is_binary(ListRaw), is_binary(NewL), ListRaw]),
 	case Type of
 		"directory"->
 			printer(Cd, T, State);
@@ -150,4 +155,22 @@ printer(Cd, [H|T], State=#list_state{prepath=PrePath, binary=Binary})->
 	end;
 
 printer(_Cd, [], State)->
+	State.
+
+page_printer(Cd, [H|T]
+		,State=#list_state{prepath=PrePath, binary=Binary}) ->
+	Full = Cd ++ "/" ++ H,
+	Type = read_type(Full),
+	case Type of 
+		"directory"->
+			page_printer(Cd, T, State);
+		_ ->
+			Rest = lists:nthtail(length(PrePath)+1, Full),
+			Fmt = "<img src=\"" ++ ?AssetsPrefix ++ "~s\"/><br/>~n",
+			NewListRaw = <<Binary/binary,
+				(list_to_binary(io_lib:format(Fmt, [Rest])))/binary>>,
+			page_printer(Cd, T, State#list_state{binary=NewListRaw})
+	end;
+
+page_printer(_Cd, [], State)->
 	State.

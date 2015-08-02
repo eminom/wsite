@@ -16,7 +16,8 @@ start(_Type, _Args) ->
 					{"/members", wsite_members, []},
 					{"/path", wsite_path, []},
 					{"/list", wsite_list, []},
-					{"/image", wsite_image, []}
+					{"/image", wsite_image, []},
+					{"/longtext", wsite_longtext,[]}
 				]
 			} 
 		] %Host ends.
